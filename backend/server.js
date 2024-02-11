@@ -1,15 +1,20 @@
-import authRoutes from "./routes/auth.routes.js";
+//package
 import express from "express";
 import dotenv from "dotenv";
+//file
+import authRoutes from "./routes/auth.routes.js";
 import connectToDB from "./db/connectToMongoDB.js";
-dotenv.config();
+//variables
 const app = express();
 const PORT = process.env.PORT || 5000;
+//middleware
+dotenv.config();
+app.use(express.json()); //to parse the incoming request with JSON payloads(from req.body)
+app.use("/api/auth", authRoutes);
+
 app.get("/", (req, res) => {
   res.send("Server is Ready");
 });
-
-app.use("/api/auth", authRoutes);
 
 app.listen(PORT, () => {
   connectToDB();
