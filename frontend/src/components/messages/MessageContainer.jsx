@@ -3,9 +3,15 @@ import useConversation from "../../zustand/useConversation";
 import MessageInput from "./MessageInput";
 import Messages from "./Messages";
 import { TiMessages } from "react-icons/ti";
+import { useAuthContext } from "../../context/AuthContext";
+import { useSocketContext } from "../../context/SocketContext";
+
 const MessageContainer = () => {
   // const noChatSelected = true;
   const { selectedConversation, setSelectedConversation } = useConversation();
+  const { onlineUsers } = useSocketContext(); // Import useSocketContext here
+  const onlineUserIdSet = new Set(onlineUsers);
+  //
   useEffect(() => {
     //cleanup function
     return () => setSelectedConversation(null);
@@ -17,11 +23,18 @@ const MessageContainer = () => {
       ) : (
         <>
           {/* Header */}
-          <div className="bg-blue-600 px-4 py-4 mb-2">
-            <span className="label-text text-xl font-semibold">To:</span>{" "}
+          <div className="bg-gray-900 px-4 py-4 mb-2">
+            <span className="label-text text-gray-300 text-xl font-semibold">
+              To:
+            </span>{" "}
             <span className="text-white text-xl font-semibold">
               {selectedConversation.fullName}
             </span>
+            <p className="text-green-500 ms-8 font-semibold">
+              {onlineUserIdSet.has(selectedConversation._id)
+                ? "Active"
+                : "Offline"}
+            </p>
           </div>
           <Messages />
           <MessageInput />
@@ -33,10 +46,14 @@ const MessageContainer = () => {
 
 export default MessageContainer;
 const NoChatSelected = () => {
+  const { authUser } = useAuthContext();
   return (
     <div className="flex items-center justify-center w-full h-full">
       <div className="px-4 text-center sm:text-lg md:text-xl text-gray-200 font-semibold flex flex-col items-center gap-2">
-        <p>Welcome 👋 John Doe ❄</p>
+        <p>
+          Welcome 👋{" "}
+          <span className="text-purple font-bold">{authUser.fullName} </span>❄
+        </p>
         <p>Select a chat to start messaging</p>
         <TiMessages className="text-3xl md:text-6xl text-center" />
       </div>
