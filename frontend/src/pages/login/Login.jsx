@@ -8,7 +8,6 @@ const Login = () => {
   const { loading, login } = useLogin();
   const handleLogin = async (e) => {
     e.preventDefault();
-    console.log(username, password);
     await login(username, password);
   };
   return (

@@ -32,7 +32,7 @@ const MessageContainer = () => {
             </span>
             <p className="text-green-500 ms-8 font-semibold">
               {onlineUserIdSet.has(selectedConversation._id)
-                ? "Active"
+                ? "Active Now"
                 : "Offline"}
             </p>
           </div>
