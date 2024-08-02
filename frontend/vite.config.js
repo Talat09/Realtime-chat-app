@@ -12,4 +12,7 @@ export default defineConfig({
       },
     },
   },
+  build: {
+    outDir: "dist", // This is the default, so you can omit this if it's already set to 'dist'
+  },
 });
