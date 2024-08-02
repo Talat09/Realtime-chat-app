@@ -1,5 +1,6 @@
 //package
 import express from "express";
+import cors from "cors";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import path from "path";
@@ -17,6 +18,7 @@ const __dirname = path.resolve();
 dotenv.config();
 app.use(express.json()); //to parse the incoming request with JSON payloads(from req.body)
 app.use(cookieParser()); //to parse the incoming request with cookies
+app.use(cors());
 app.use("/api/auth", authRoutes);
 app.use("/api/messages", messageRoutes);
 app.use("/api/users", userRoutes);
